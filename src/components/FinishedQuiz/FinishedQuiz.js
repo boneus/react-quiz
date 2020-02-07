@@ -1,5 +1,6 @@
 import React from 'react'
 import classes from './FinishedQuiz.module.css'
+import Button from "../UI/Button/Button"
 
 const FinishedQuiz = props => {
   console.log(props)
@@ -29,22 +30,13 @@ const FinishedQuiz = props => {
             </li>
           )
         })}
-        {/*<li>*/}
-        {/*  <strong>1. </strong>*/}
-        {/*  How are you?*/}
-        {/*  <i className={'fa fa-times ' + classes.error} />*/}
-        {/*</li>*/}
-        {/*<li>*/}
-        {/*  <strong>2. </strong>*/}
-        {/*  How are you?*/}
-        {/*  <i className={'fa fa-check ' + classes.success} />*/}
-        {/*</li>*/}
       </ul>
 
       <p>Правильно {successCount} из {props.quiz.length}</p>
 
       <div>
-        <button onClick={props.onRetry}>Повторить</button>
+        <Button onClick={props.onRetry} type="primary">Повторить</Button>
+        <Button type="success">Перейти в список тестов</Button>
       </div>
     </div>
   )
