@@ -49,7 +49,7 @@ class Auth extends Component {
       returnSecureToken: true
     }
     try {
-      const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA8v-iULSkEPfZp9wYnEXMp_eMcfFZSAcc', authData)
+      const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_WEB_API_KEY}`, authData)
       console.log(response.data)
     } catch (e) {
       console.log(e)
@@ -63,7 +63,7 @@ class Auth extends Component {
       returnSecureToken: true
     }
     try {
-      const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA8v-iULSkEPfZp9wYnEXMp_eMcfFZSAcc', authData)
+      const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_WEB_API_KEY}`, authData)
       console.log(response.data)
     } catch (e) {
       console.log(e)
