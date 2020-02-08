@@ -12,6 +12,7 @@ import Input from "../../components/UI/Input/Input"
 class Auth extends Component {
 
   state = {
+    isFormValid: false,
     formControls: {
       email: {
         value: '',
@@ -85,8 +86,14 @@ class Auth extends Component {
       valid: this.validateControl(event.target.value, formControls[controlName].validation)
     }
 
+    let isFormValid = true
+
+    Object.keys(formControls).forEach(name => {
+      isFormValid = formControls[name].valid && isFormValid
+    })
+
     this.setState({
-      formControls
+      formControls, isFormValid
     })
   }
 
@@ -128,12 +135,14 @@ class Auth extends Component {
             <Button
               type="success"
               onClick={this.loginHandler}
+              disabled={!this.state.isFormValid}
             >
               Войти
             </Button>
             <Button
               type="primary"
               onClick={this.registerHandler}
+              disabled={!this.state.isFormValid}
             >
               Зарегистрироваться
             </Button>
