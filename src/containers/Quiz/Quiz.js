@@ -23,7 +23,7 @@ class Quiz extends Component {
         <div className={classes.QuizWrapper}>
           <h1>Ответьте на все вопросы</h1>
 
-          {this.props.loading && !this.props.quiz
+          {this.props.loading || !this.props.quiz
             ? <Loader />
             : this.props.isFinished
               ? <FinishedQuiz
