@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
-import is from 'is_js'
-import classes from './Auth.module.css'
-import Button from "../../components/UI/Button/Button"
-import Input from "../../components/UI/Input/Input"
-import {connect} from "react-redux"
-import {auth} from "../../store/actions/auth"
+import is from 'is_js';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
+import {auth} from '../../store/actions/auth';
+import classes from './Auth.module.css';
 
 // function validateEmail(email) {
 //   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -12,7 +12,6 @@ import {auth} from "../../store/actions/auth"
 // }
 
 class Auth extends Component {
-
   state = {
     isFormValid: false,
     formControls: {
@@ -25,8 +24,8 @@ class Auth extends Component {
         touched: false,
         validation: {
           required: true,
-          email: true
-        }
+          email: true,
+        },
       },
       password: {
         value: '',
@@ -37,18 +36,18 @@ class Auth extends Component {
         touched: false,
         validation: {
           required: true,
-          minLength: 6
-        }
-      }
-    }
-  }
+          minLength: 6,
+        },
+      },
+    },
+  };
 
   loginHandler = () => {
     this.props.auth(
       this.state.formControls.email.value,
       this.state.formControls.password.value,
       true
-    )
+    );
     // const authData = {
     //   email: this.state.formControls.email.value,
     //   password: this.state.formControls.password.value,
@@ -60,14 +59,14 @@ class Auth extends Component {
     // } catch (e) {
     //   console.log(e)
     // }
-  }
+  };
 
   registerHandler = () => {
     this.props.auth(
       this.state.formControls.email.value,
       this.state.formControls.password.value,
       false
-    )
+    );
     // const authData = {
     //   email: this.state.formControls.email.value,
     //   password: this.state.formControls.password.value,
@@ -79,59 +78,63 @@ class Auth extends Component {
     // } catch (e) {
     //   console.log(e)
     // }
-  }
+  };
 
-  submitHandler = event => {
-    event.preventDefault()
-  }
+  submitHandler = (event) => {
+    event.preventDefault();
+  };
 
   validateControl(value, validation) {
     if (!validation) {
-      return true
+      return true;
     }
 
-    let isValid = true
+    let isValid = true;
 
     if (validation.required) {
-      isValid = value.trim() !== '' && isValid
+      isValid = value.trim() !== '' && isValid;
     }
 
     if (validation.email) {
-      isValid = is.email(value) && isValid
+      isValid = is.email(value) && isValid;
     }
 
     if (validation.minLength) {
-      isValid = value.length >= validation.minLength && isValid
+      isValid = value.length >= validation.minLength && isValid;
     }
 
-    return isValid
+    return isValid;
   }
 
   onChangeHandler = (event, controlName) => {
     // console.log(`${controlName}: `, event.target.value)
 
-    const formControls = {...this.state.formControls}
+    const formControls = {...this.state.formControls};
     formControls[controlName] = {
       ...formControls[controlName],
       value: event.target.value,
       touched: true,
-      valid: this.validateControl(event.target.value, formControls[controlName].validation)
-    }
+      valid: this.validateControl(
+        event.target.value,
+        formControls[controlName].validation
+      ),
+    };
 
-    let isFormValid = true
+    let isFormValid = true;
 
-    Object.keys(formControls).forEach(name => {
-      isFormValid = formControls[name].valid && isFormValid
-    })
+    Object.keys(formControls).forEach((name) => {
+      isFormValid = formControls[name].valid && isFormValid;
+    });
 
     this.setState({
-      formControls, isFormValid
-    })
-  }
+      formControls,
+      isFormValid,
+    });
+  };
 
   renderInputs() {
     return Object.keys(this.state.formControls).map((controlName, index) => {
-      const control = this.state.formControls[controlName]
+      const control = this.state.formControls[controlName];
       return (
         <Input
           key={controlName + index}
@@ -142,10 +145,10 @@ class Auth extends Component {
           label={control.label}
           shouldValidate={!!control.validation}
           errorMessage={control.errorMessage}
-          onChange={event => this.onChangeHandler(event, controlName)}
+          onChange={(event) => this.onChangeHandler(event, controlName)}
         />
-      )
-    })
+      );
+    });
   }
 
   render() {
@@ -154,8 +157,10 @@ class Auth extends Component {
         <div>
           <h1>Авторизация</h1>
 
-          <form action="" onSubmit={this.submitHandler} className={classes.AuthForm}>
-
+          <form
+            action=''
+            onSubmit={this.submitHandler}
+            className={classes.AuthForm}>
             {/*<Input label="Email" />*/}
 
             {/*<Input*/}
@@ -165,17 +170,15 @@ class Auth extends Component {
             {this.renderInputs()}
 
             <Button
-              type="success"
+              type='success'
               onClick={this.loginHandler}
-              disabled={!this.state.isFormValid}
-            >
+              disabled={!this.state.isFormValid}>
               Войти
             </Button>
             <Button
-              type="primary"
+              type='primary'
               onClick={this.registerHandler}
-              disabled={!this.state.isFormValid}
-            >
+              disabled={!this.state.isFormValid}>
               Зарегистрироваться
             </Button>
           </form>
@@ -187,8 +190,9 @@ class Auth extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    auth: (email, password, isLogin) => dispatch(auth(email, password, isLogin))
-  }
+    auth: (email, password, isLogin) =>
+      dispatch(auth(email, password, isLogin)),
+  };
 }
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(null, mapDispatchToProps)(Auth);
